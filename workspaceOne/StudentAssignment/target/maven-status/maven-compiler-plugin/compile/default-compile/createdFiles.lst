@@ -1,0 +1,6 @@
+tester\registerStudent.class
+pojos\Student.class
+dao\StudentDao.class
+dao\StudentDaoImpl.class
+pojos\Course.class
+utils\HibernateUtils.class

@@ -28,6 +28,10 @@ public class Student {
 	private Double admissionFees;
 	@Column(name="dob")
 	private LocalDate dob;
+	
+	public Student() {
+		//default constructor
+	}
 
 	public Student(String firstName, String lastName, String email, String password, String comfirmPassword,
 			Course course, Double admissionFees, LocalDate dob) {
@@ -41,5 +45,11 @@ public class Student {
 		this.course = course;
 		this.admissionFees = admissionFees;
 		this.dob = dob;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", course=" + course + ", admissionFees=" + admissionFees + ", dob=" + dob + "]";
 	}
 }

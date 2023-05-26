@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 
@@ -19,14 +20,34 @@ public class StudentDaoImpl implements StudentDao {
 		Transaction tx= session.beginTransaction();
 		
 		try {
-		session.save(stud);
+		Serializable id = session.save(stud);
 		tx.commit();
 		returnMessage = "Inserted!!!";
 		}catch(RuntimeException e) {
-			tx.rollback();
+			if(tx!=null)
+				tx.rollback();
+		}
+		return returnMessage;
+	}
+	
+	public Student userLogin(String email,String password)
+	{		
+		Student student = null;
+		Session session  = HibernateUtils.getFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		
+		try {
+			String query = "SELECT student FROM Student student WHERE student.email=:givenEmail AND student.password=:givenPassword";
+			student = session.createQuery(query, Student.class)
+					.setParameter("givenEmail", email)
+					.setParameter("givenPassword", password)
+					.getSingleResult();
+			tx.commit();
+		}catch(RuntimeException e) {
+			if(tx!=null)
+				tx.rollback();
 			throw e;
 		}
-		
-		return returnMessage;
+		return student;
 	}
 }
